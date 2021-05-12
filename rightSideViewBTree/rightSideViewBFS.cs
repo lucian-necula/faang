@@ -14,25 +14,27 @@ public class TreeNode
     }
 }
 
+
 public class Solution
 {
-    public IList<IList<int>> LevelOrder(TreeNode root)
+    public IList<int> RightSideView(TreeNode root)
     {
 
-        var result = new List<IList<int>>();
+        if (root == null) return new List<int>();
+
+        var result = new List<int>();
         var queue = new Queue<TreeNode>();
         queue.Enqueue(root);
 
         while (queue.Count > 0)
         {
-            var currentLevelValues = new List<int>();
-            int length = queue.Count;
-            int count = 0;
+            var length = queue.Count;
+            var count = 0;
+            TreeNode currentNode = null;
 
             while (count < length)
             {
-                var currentNode = queue.Dequeue();
-                currentLevelValues.Add(currentNode.val);
+                currentNode = queue.Dequeue();
 
                 if (currentNode.left != null)
                 {
@@ -43,13 +45,11 @@ public class Solution
                 {
                     queue.Enqueue(currentNode.right);
                 }
+
                 count++;
             }
 
-            if (currentLevelValues.Count != 0)
-            {
-                result.Add(currentLevelValues);
-            }
+            result.Add(currentNode.val);
         }
 
         return result;
